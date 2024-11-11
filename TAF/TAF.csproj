@@ -34,13 +34,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Business\Models\" />
     <Folder Include="Business\API Clients\" />
     <Folder Include="Business\Page Objects\" />
     <Folder Include="Core\Configuration\" />
     <Folder Include="Core\Logger\" />
     <Folder Include="Core\Utilities\" />
-    <Folder Include="Tests\API tests\" />
+    <Folder Include="Tests\API tests\GET\" />
     <Folder Include="Tests\Reporter\" />
     <Folder Include="Tests\UI Tests\" />
     <Folder Include="Tests\Test runner\" />
