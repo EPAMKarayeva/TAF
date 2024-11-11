@@ -35,7 +35,6 @@
 
   <ItemGroup>
     <Folder Include="Business\API Clients\" />
-    <Folder Include="Business\Page Objects\" />
     <Folder Include="Core\Configuration\" />
     <Folder Include="Core\Logger\" />
     <Folder Include="Core\Utilities\" />
