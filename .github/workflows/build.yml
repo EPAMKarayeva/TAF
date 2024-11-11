@@ -1,0 +1,29 @@
+name: Build on PR
+
+on: 
+  pull_request:
+    paths:
+      - '**/*.cs'   
+      - '**/*.csproj'
+
+jobs:
+  build:
+    runs-on: windows-latest  #Windows
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+    
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '8.0.403' 
+
+    - name: Install dependencies
+      run: dotnet restore
+    
+    - name: Build
+      run: dotnet build --no-restore
+
+    - name: Test
+      run: dotnet test --no-build
