@@ -1,0 +1,7 @@
+[
+  { "InvalidParameter": "invalid key" },
+  { "InvalidParameter": "id" },
+  { "InvalidParameter": "7&??123" },
+  { "InvalidParameter": "ReportPortalKey_WYzjrJxLSqafC66glgqsrfFzBnEwQTifQ6leUp6wZOI8olk_psy5lCrgPDRbTfq7" },
+  { "InvalidParameter": "__" }
+]
