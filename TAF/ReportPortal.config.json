@@ -3,7 +3,7 @@
   "server": {
     "url": "http://localhost:8080",
     "project": "superadmin_personal",
-    "apiKey": "AdminReportPortal_BV1YEpJBR4-2UJfopXmFQSh6K1U4rwUSse976YybZ5J0SkAeU0xD7E_6LPsLIOPw" 
+    "apiKey": "AdminReportPortal_GVJLEBQhRMmyT65hHhYtn1KZmabWquVRRkflSKh9ZryznY2NCflJA941bEMU0kn3"
   },
   "launch": {
     "name": ".NET Launch",

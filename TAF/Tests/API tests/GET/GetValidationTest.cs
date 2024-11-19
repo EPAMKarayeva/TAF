@@ -4,8 +4,12 @@ using TAF.Core.Utilities.Contants;
 using TAF.Core.Utilities.TestData.TestDataProviders;
 using TAF.Tests.TestClasses;
 
+[assembly: LevelOfParallelism(5)]
+
 namespace TAF.Tests.API_tests.GET
 {
+  [TestFixture]
+  [Parallelizable(ParallelScope.Children)]
   internal class GetValidationTest : BaseTestClass
   {
     [Test]
@@ -20,6 +24,7 @@ namespace TAF.Tests.API_tests.GET
     }
 
     [Test]
+    [Parallelizable(ParallelScope.Self)]
     [TestCaseSource(typeof(TestCaseDataGetProvider), nameof(TestCaseDataGetProvider.GetWrongApi))]
     public void CheckGetAllDashboardsWithWrongApiKey(string apiKey)
     {
@@ -33,6 +38,7 @@ namespace TAF.Tests.API_tests.GET
     }
 
     [Test]
+    [Parallelizable(ParallelScope.Self)]
     [TestCaseSource(typeof(TestCaseDataGetProvider), nameof(TestCaseDataGetProvider.GetWrongId))]
     public void CheckGetDashboardWithWrongId(string id)
     {
@@ -46,6 +52,7 @@ namespace TAF.Tests.API_tests.GET
     }
 
     [Test]
+    [Parallelizable(ParallelScope.Self)]
     [TestCaseSource(typeof(TestCaseDataGetProvider), nameof(TestCaseDataGetProvider.GetAnotherId))]
     public void CheckGetDashboardWithAnotherId(string id)
     {

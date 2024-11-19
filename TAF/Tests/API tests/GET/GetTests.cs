@@ -27,7 +27,7 @@ namespace TAF.Tests.API_tests.GET
     }
 
     [Test]
-    public void CheckGetDashboarsTest()
+    public void CheckGetDashboardTest()
     {
       var request = RequestWithAuth(DashboardEnpoints.GetDashboardUrl)
           .AddQueryParameter("field", "id,name")
