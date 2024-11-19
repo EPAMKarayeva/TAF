@@ -36,6 +36,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Core\Configuration\" />
     <Folder Include="Core\Logger\" />
     <Folder Include="Tests\API tests\PUT\" />
     <Folder Include="Tests\API tests\POST\" />
@@ -45,9 +46,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Core\Configuration\ReportPortal.config.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Update="Core\Utilities\TestData\TestResources\TestDataGetMethodWithAnotherId.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

@@ -10,8 +10,8 @@ namespace TAF.Core.Utilities.Contants
   {
     public const string AdminUserName = "superadmin_personal";
     public const string UserName = "aziza_karayeva_personal";
-    public const string ExistingDashboardId = "28";
-    public const string ApiKey = "AdminReportPortal_BV1YEpJBR4-2UJfopXmFQSh6K1U4rwUSse976YybZ5J0SkAeU0xD7E_6LPsLIOPw";
+    public const string ExistingDashboardId = "14";
+    public const string ApiKey = "AdminReportPortal_GVJLEBQhRMmyT65hHhYtn1KZmabWquVRRkflSKh9ZryznY2NCflJA941bEMU0kn3";
 
 
   }
