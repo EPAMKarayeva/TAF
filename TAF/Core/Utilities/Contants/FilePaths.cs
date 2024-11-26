@@ -11,5 +11,6 @@ namespace TAF.Core.Utilities.Contants
     public const string GetWithWrongApi = @"Core\Utilities\TestData\TestResources\TestDataGetMethodWithAnotherId.json";
     public const string GetWithWrongId = @"Core\Utilities\TestData\TestResources\TestDataGetMethodWithWrongId.json";
     public const string GetWithAnotherId = @"Core\Utilities\TestData\TestResources\TestDataGetMethodWithAnotherId.json";
+    public const string PostWithWrongParams = @"Core\Utilities\TestData\TestResources\TestDataPostMethodWrongParams.json";
   }
 }

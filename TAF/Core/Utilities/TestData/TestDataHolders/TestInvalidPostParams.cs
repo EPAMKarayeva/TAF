@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TAF.Business.Models
+namespace TAF.Core.Utilities.TestData.TestDataHolders
 {
-  public class Dashboard
+  public class TestInvalidPostParams
   {
-    public int Id { get; set; }
+    public string Description { get; set; }
     public string Name { get; set; }
   }
 }

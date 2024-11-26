@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using TAF.Business.Models;
 using TAF.Core.Utilities.Contants;
 using TAF.Tests.TestClasses;
 
@@ -16,28 +17,24 @@ namespace TAF.Tests.API_tests.GET
     [Test]
     public void CheckGetAllDashboardsTest()
     {
-      var request = RequestWithAuth(DashboardEnpoints.GetAllDashboardsUrl);
+      var request = RequestWithAuth(DashboardEnpoints.GetAllDashboardsUrl, Method.Get);
 
-      //var client = new RestClient("http://localhost:8080");
-      //var request = new RestRequest("/api/v1/superadmin_personal/dashboard")
-      //.AddHeader("Authorization", $"Bearer {DashboardUrl.ApiKey}");
-      var response = _client.Get(request);
+      var response = _client.Execute(request);
 
-      Assert.That(HttpStatusCode.OK, Is.EqualTo(response.StatusCode));
+      Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
     }
 
     [Test]
     public void CheckGetDashboardTest()
     {
-      var request = RequestWithAuth(DashboardEnpoints.GetDashboardUrl)
-          .AddQueryParameter("field", "id,name")
+      var request = RequestWithAuth(DashboardEnpoints.GetDashboardUrl, Method.Get)
+          .AddQueryParameter("fields", "id,name")
           .AddUrlSegment("id", DashboardUrl.ExistingDashboardId);
 
-      var response = _client.Get(request);
-      var responseContent = JToken.Parse(response.Content);
+      RestResponse<Dashboard> response = _client.Execute<Dashboard>(request);
 
-      Assert.That(HttpStatusCode.OK, Is.EqualTo(response.StatusCode));
-      Assert.That("DEMO DASHBOARD", Is.EqualTo(JToken.Parse(response.Content).SelectToken("name").ToString()));
+      Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+      Assert.That(response.Data.Name, Is.EqualTo("DEMO DASHBOARD"));
     }
   }
 }

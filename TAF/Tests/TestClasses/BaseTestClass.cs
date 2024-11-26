@@ -8,7 +8,7 @@ using TAF.Core.Utilities.Contants;
 
 namespace TAF.Tests.TestClasses
 {
-    internal class BaseTestClass
+    public class BaseTestClass
     {
         protected static IRestClient _client;
 
@@ -18,16 +18,16 @@ namespace TAF.Tests.TestClasses
             _client = new RestClient("http://localhost:8080");
         }
 
-        protected RestRequest RequestWithAuth(string url)
+        protected RestRequest RequestWithAuth(string url, Method method)
         {
-            return RequestWithoutAuth(url)
+            return RequestWithoutAuth(url,method)
               .AddHeader("Authorization", $"Bearer {DashboardUrl.ApiKey}")
               .AddUrlSegment("user", DashboardUrl.AdminUserName);
         }
 
-        protected RestRequest RequestWithoutAuth(string url)
+        protected RestRequest RequestWithoutAuth(string url, Method method)
         {
-            return new RestRequest(url);
+            return new RestRequest(url, method);
         }
 
         [OneTimeTearDown]

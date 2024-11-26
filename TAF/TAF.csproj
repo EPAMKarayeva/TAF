@@ -10,6 +10,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Tests\Test runner\**" />
+    <EmbeddedResource Remove="Tests\Test runner\**" />
+    <None Remove="Tests\Test runner\**" />
+    <SpecFlowFeatureFiles Remove="Tests\Test runner\**" />
+    <SpecFlowObsoleteCodeBehindFiles Remove="Tests\Test runner\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="coverlet.collector" Version="6.0.2">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -42,14 +50,18 @@
   <ItemGroup>
     <Folder Include="Core\Configuration\" />
     <Folder Include="Core\Logger\" />
+    <Folder Include="Tests\API tests\DELETE\" />
+    <Folder Include="Tests\API tests\PATCH\" />
     <Folder Include="Tests\API tests\PUT\" />
-    <Folder Include="Tests\API tests\POST\" />
+    <Folder Include="Tests\BDD\Features\" />
     <Folder Include="Tests\Reporter\" />
     <Folder Include="Tests\UI Tests\" />
-    <Folder Include="Tests\Test runner\" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Core\Utilities\TestData\TestResources\TestDataPostMethodWrongParams.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Core\Utilities\TestData\TestResources\TestDataGetMethodWithAnotherId.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
