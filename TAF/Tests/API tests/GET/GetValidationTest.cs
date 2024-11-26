@@ -1,5 +1,6 @@
 ﻿using RestSharp;
 using System.Net;
+using TAF.Business.Models;
 using TAF.Core.Utilities.Contants;
 using TAF.Core.Utilities.TestData.TestDataProviders;
 using TAF.Tests.TestClasses;
@@ -15,12 +16,12 @@ namespace TAF.Tests.API_tests.GET
     [Test]
     public void CheckGetAllDashboardsWithOutAuth()
     {
-      var request = RequestWithoutAuth(DashboardEnpoints.GetAllDashboardsUrl);
+      var request = RequestWithoutAuth(DashboardEnpoints.GetAllDashboardsUrl, Method.Get);
 
-      var response = Assert.Throws<HttpRequestException>(() => _client.Get(request));
+      var response =  _client.Execute(request);
 
-      Assert.That(HttpStatusCode.Unauthorized, Is.EqualTo(response.StatusCode));
-      Assert.That("Request failed with status code Unauthorized", Is.EqualTo(response.Message));
+      Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Unauthorized));
+      Assert.That(response.Content,Does.Contain("Full authentication is required to access this resource"));
     }
 
     [Test]
@@ -28,13 +29,13 @@ namespace TAF.Tests.API_tests.GET
     [TestCaseSource(typeof(TestCaseDataGetProvider), nameof(TestCaseDataGetProvider.GetWrongApi))]
     public void CheckGetAllDashboardsWithWrongApiKey(string apiKey)
     {
-      var request = RequestWithoutAuth(DashboardEnpoints.GetAllDashboardsUrl)
+      var request = RequestWithoutAuth(DashboardEnpoints.GetAllDashboardsUrl, Method.Get)
         .AddHeader("Authorization", apiKey);
 
-      var response = Assert.Throws<HttpRequestException>(() => _client.Get(request));
+      var response = _client.Execute(request);
 
-      Assert.That(HttpStatusCode.Unauthorized, Is.EqualTo(response.StatusCode));
-      Assert.That("Request failed with status code Unauthorized", Is.EqualTo(response.Message));
+      Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Unauthorized));
+      Assert.That(response.Content, Does.Contain("Full authentication is required to access this resource"));
     }
 
     [Test]
@@ -42,13 +43,13 @@ namespace TAF.Tests.API_tests.GET
     [TestCaseSource(typeof(TestCaseDataGetProvider), nameof(TestCaseDataGetProvider.GetWrongId))]
     public void CheckGetDashboardWithWrongId(string id)
     {
-      var request = RequestWithAuth(DashboardEnpoints.GetDashboardUrl)
+      var request = RequestWithAuth(DashboardEnpoints.GetDashboardUrl, Method.Get)
         .AddUrlSegment("id", id);
 
-      var response = Assert.Throws<HttpRequestException>(() => _client.Get(request));
+      var response = _client.Execute(request);
 
-      Assert.That(HttpStatusCode.BadRequest, Is.EqualTo(response.StatusCode));
-      Assert.That("Request failed with status code BadRequest", Is.EqualTo(response.Message));
+      Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
+      Assert.That(response.ErrorException.Message, Does.Contain("Request failed with status code BadRequest"));
     }
 
     [Test]
@@ -56,13 +57,13 @@ namespace TAF.Tests.API_tests.GET
     [TestCaseSource(typeof(TestCaseDataGetProvider), nameof(TestCaseDataGetProvider.GetAnotherId))]
     public void CheckGetDashboardWithAnotherId(string id)
     {
-      var request = RequestWithAuth(DashboardEnpoints.GetDashboardUrl)
+      var request = RequestWithAuth(DashboardEnpoints.GetDashboardUrl, Method.Get)
         .AddUrlSegment("id", id);
 
-      var response = _client.Get(request);
+      RestResponse<Dashboard> response = _client.Execute<Dashboard>(request);
 
       Assert.That(response.Content, Does.Contain($"Dashboard with ID '{id}' not found on project"));
-      Assert.That(HttpStatusCode.NotFound, Is.EqualTo(response.StatusCode));
+      Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
     }
   }
 }

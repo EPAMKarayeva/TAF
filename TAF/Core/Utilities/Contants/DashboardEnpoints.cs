@@ -10,6 +10,7 @@ namespace TAF.Core.Utilities.Contants
   {
     public const string GetDashboardUrl = "/api/v1/{user}/dashboard/{id}";
     public const string GetAllDashboardsUrl = "/api/v1/{user}/dashboard";
-    public const string CreateDashboardUrl = "/api/v1/{user}/dashboard/{id}";
+    public const string CreateDashboardUrl = "/api/v1/{user}/dashboard";
+    public const string DeleteBoardUrl = "/api/v1/{user}/dashboard/{id}";
   }
 }
