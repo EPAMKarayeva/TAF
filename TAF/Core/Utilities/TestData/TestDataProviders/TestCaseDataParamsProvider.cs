@@ -9,12 +9,12 @@ using TAF.Core.Utilities.TestData.TestDataHolders;
 
 namespace TAF.Core.Utilities.TestData.TestDataProviders
 {
-  public class TestCaseDataPostProvider
+  public class TestCaseDataParamsProvider
   {
     public static IEnumerable<TestCaseData> GetTestDataFromJson(string path)
     {
       var json = File.ReadAllText(path);
-      var testData = JsonConvert.DeserializeObject<List<TestInvalidPostParams>>(json);
+      var testData = JsonConvert.DeserializeObject<List<TestInvalidParams>>(json);
 
       foreach (var data in testData)
       {

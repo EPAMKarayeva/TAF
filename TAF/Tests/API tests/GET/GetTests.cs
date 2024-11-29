@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
+using NLog;
 using RestSharp;
 using System;
 using System.Collections.Generic;
@@ -14,20 +15,28 @@ namespace TAF.Tests.API_tests.GET
 {
   internal class GetTests : BaseTestClass
   {
+
     [Test]
     public void CheckGetAllDashboardsTest()
     {
       var request = RequestWithAuth(DashboardEnpoints.GetAllDashboardsUrl, Method.Get);
 
       var response = _client.Execute(request);
+      var responseContent = JToken.Parse(response.Content);
+
+      bool dashboardsExists = responseContent["content"]
+                           .Children<JObject>()
+                           .Any();
 
       Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+      Assert.That(dashboardsExists, Is.True);
+
     }
 
     [Test]
     public void CheckGetDashboardTest()
     {
-      var request = RequestWithAuth(DashboardEnpoints.GetDashboardUrl, Method.Get)
+      var request = RequestWithAuth(DashboardEnpoints.DashboardUrl, Method.Get)
           .AddQueryParameter("fields", "id,name")
           .AddUrlSegment("id", DashboardUrl.ExistingDashboardId);
 

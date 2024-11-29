@@ -4,7 +4,7 @@ using TAF.Core.Utilities.TestData.TestDataHolders;
 
 namespace TAF.Core.Utilities.TestData.TestDataProviders
 {
-  public static class TestCaseDataGetProvider
+  public static class TestCaseDataProvider
   {
     public static IEnumerable<TestCaseData> GetTestDataFromJson(string path)
     {

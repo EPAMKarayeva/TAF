@@ -8,9 +8,9 @@ namespace TAF.Core.Utilities.Contants
 {
   internal class FilePaths
   {
-    public const string GetWithWrongApi = @"Core\Utilities\TestData\TestResources\TestDataGetMethodWithAnotherId.json";
-    public const string GetWithWrongId = @"Core\Utilities\TestData\TestResources\TestDataGetMethodWithWrongId.json";
-    public const string GetWithAnotherId = @"Core\Utilities\TestData\TestResources\TestDataGetMethodWithAnotherId.json";
-    public const string PostWithWrongParams = @"Core\Utilities\TestData\TestResources\TestDataPostMethodWrongParams.json";
+    public const string GetWithWrongApi = @"Core\Utilities\TestData\TestResources\TestDataWithAnotherId.json";
+    public const string GetWithWrongId = @"Core\Utilities\TestData\TestResources\TestDataWithWrongId.json";
+    public const string GetWithAnotherId = @"Core\Utilities\TestData\TestResources\TestDataWithAnotherId.json";
+    public const string PostWithWrongParams = @"Core\Utilities\TestData\TestResources\TestDataWrongParams.json";
   }
 }

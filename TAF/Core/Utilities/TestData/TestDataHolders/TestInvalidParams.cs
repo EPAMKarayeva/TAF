@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TAF.Core.Utilities.TestData.TestDataHolders
 {
-  public class TestInvalidPostParams
+  public class TestInvalidParams
   {
     public string Description { get; set; }
     public string Name { get; set; }
