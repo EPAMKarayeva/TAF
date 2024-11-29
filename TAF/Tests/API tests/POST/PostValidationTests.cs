@@ -32,7 +32,7 @@ namespace TAF.Tests.API_tests.POST
 
     [Test]
     [Parallelizable(ParallelScope.Self)]
-    [TestCaseSource(typeof(TestCaseDataPostProvider), nameof(TestCaseDataPostProvider.PostWithWrongParams))]
+    [TestCaseSource(typeof(TestCaseDataParamsProvider), nameof(TestCaseDataParamsProvider.PostWithWrongParams))]
     public void CheckCreateDashboardWithWrongParams(string description, string name)
     {
       var request = RequestWithAuth(DashboardEnpoints.CreateDashboardUrl, Method.Post)

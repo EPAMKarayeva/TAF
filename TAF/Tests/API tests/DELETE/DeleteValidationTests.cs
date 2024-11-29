@@ -1,35 +1,38 @@
 ﻿using RestSharp;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
-using TAF.Business.Models;
+using System.Text;
+using System.Threading.Tasks;
 using TAF.Core.Utilities.Contants;
 using TAF.Core.Utilities.TestData.TestDataProviders;
 using TAF.Tests.TestClasses;
 
-[assembly: LevelOfParallelism(5)]
-
-namespace TAF.Tests.API_tests.GET
+namespace TAF.Tests.API_tests.DELETE
 {
   [TestFixture]
   [Parallelizable(ParallelScope.Children)]
-  internal class GetValidationTest : BaseTestClass
+  public class DeleteValidationTests : BaseTestClass
   {
     [Test]
-    public void CheckGetAllDashboardsWithOutAuth()
+    public void CheckDeleteDashboardsWithOutAuth()
     {
-      var request = RequestWithoutAuth(DashboardEnpoints.GetAllDashboardsUrl, Method.Get);
+      var request = RequestWithoutAuth(DashboardEnpoints.GetAllDashboardsUrl, Method.Delete)
+                    .AddUrlSegment("id", DashboardUrl.TestDashBoard);
 
-      var response =  _client.Execute(request);
+      var response = _client.Execute(request);
 
       Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Unauthorized));
-      Assert.That(response.Content,Does.Contain("Full authentication is required to access this resource"));
+      Assert.That(response.Content, Does.Contain("Full authentication is required to access this resource"));
     }
 
     [Test]
     [Parallelizable(ParallelScope.Self)]
     [TestCaseSource(typeof(TestCaseDataProvider), nameof(TestCaseDataProvider.GetWrongApi))]
-    public void CheckGetAllDashboardsWithWrongApiKey(string apiKey)
+    public void CheckDeleteWithWrongApiKey(string apiKey)
     {
-      var request = RequestWithoutAuth(DashboardEnpoints.GetAllDashboardsUrl, Method.Get)
+      var request = RequestWithoutAuth(DashboardEnpoints.GetAllDashboardsUrl, Method.Delete)
         .AddHeader("Authorization", apiKey);
 
       var response = _client.Execute(request);
@@ -41,9 +44,9 @@ namespace TAF.Tests.API_tests.GET
     [Test]
     [Parallelizable(ParallelScope.Self)]
     [TestCaseSource(typeof(TestCaseDataProvider), nameof(TestCaseDataProvider.GetWrongId))]
-    public void CheckGetDashboardWithWrongId(string id)
+    public void CheckDeleteDashboardWithWrongId(string id)
     {
-      var request = RequestWithAuth(DashboardEnpoints.DashboardUrl, Method.Get)
+      var request = RequestWithAuth(DashboardEnpoints.DashboardUrl, Method.Delete)
         .AddUrlSegment("id", id);
 
       var response = _client.Execute(request);
@@ -55,9 +58,9 @@ namespace TAF.Tests.API_tests.GET
     [Test]
     [Parallelizable(ParallelScope.Self)]
     [TestCaseSource(typeof(TestCaseDataProvider), nameof(TestCaseDataProvider.GetAnotherId))]
-    public void CheckGetDashboardWithAnotherId(string id)
+    public void CheckDeleteDashboardWithAnotherId(string id)
     {
-      var request = RequestWithAuth(DashboardEnpoints.DashboardUrl, Method.Get)
+      var request = RequestWithAuth(DashboardEnpoints.DashboardUrl, Method.Delete)
         .AddUrlSegment("id", id);
 
       var response = _client.Execute(request);

@@ -78,7 +78,7 @@ namespace TAF.Tests.BDD.Features
         [NUnit.Framework.DescriptionAttribute("Check Get Dashboard With Invalid Id")]
         [NUnit.Framework.TestCaseAttribute("invalid", "BadRequest", "Bad Request", null)]
         [NUnit.Framework.TestCaseAttribute("id", "BadRequest", "Bad Request", null)]
-        [NUnit.Framework.TestCaseAttribute("17", "NotFound", "Did you use correct project name?", null)]
+        [NUnit.Framework.TestCaseAttribute("1", "NotFound", "Did you use correct project name?", null)]
         [NUnit.Framework.TestCaseAttribute("7&??123", "BadRequest", "Bad Request", null)]
         [NUnit.Framework.TestCaseAttribute("__", "BadRequest", "Bad Request", null)]
         public void CheckGetDashboardWithInvalidId(string id_Value, string status_Code, string error_Message, string[] exampleTags)

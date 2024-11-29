@@ -48,27 +48,25 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Core\Configuration\" />
     <Folder Include="Core\Logger\" />
-    <Folder Include="Tests\API tests\DELETE\" />
-    <Folder Include="Tests\API tests\PATCH\" />
-    <Folder Include="Tests\API tests\PUT\" />
     <Folder Include="Tests\BDD\Features\" />
     <Folder Include="Tests\Reporter\" />
-    <Folder Include="Tests\UI Tests\" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Core\Utilities\TestData\TestResources\TestDataPostMethodWrongParams.json">
+    <None Update="Core\Configuration\NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Core\Utilities\TestData\TestResources\TestDataGetMethodWithAnotherId.json">
+    <None Update="Core\Utilities\TestData\TestResources\TestDataWrongParams.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Core\Utilities\TestData\TestResources\TestDataGetMethodWithWrongId.json">
+    <None Update="Core\Utilities\TestData\TestResources\TestDataWithAnotherId.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Core\Utilities\TestData\TestResources\TestDataGetMethodWithWrongApi.json">
+    <None Update="Core\Utilities\TestData\TestResources\TestDataWithWrongId.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Core\Utilities\TestData\TestResources\TestDataWithWrongApi.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="ReportPortal.config.json">

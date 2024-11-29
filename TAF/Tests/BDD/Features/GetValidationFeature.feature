@@ -16,7 +16,7 @@ Scenario Outline: Check Get Dashboard With Invalid Id
 	| id_value | status_code | error_message                     |
 	| invalid  | BadRequest  | Bad Request                       |
 	| id       | BadRequest  | Bad Request                       |
-	| 17       | NotFound    | Did you use correct project name? |
+	| 1        | NotFound    | Did you use correct project name? |
 	| 7&??123  | BadRequest  | Bad Request                       |
 	| __       | BadRequest  | Bad Request                       |
 
