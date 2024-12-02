@@ -1,6 +1,18 @@
 pipeline {
     agent any
+    
+    tools {
+        dotnet 'dotnetTool'
+    }
+
     stages {
+        stage('Preparation') {
+            steps {
+                script {
+                    sh 'dotnet --version'
+                }
+            }
+        }
         stage('Build') {
             steps {
                 script {
