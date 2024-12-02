@@ -2,7 +2,7 @@ pipeline {
     agent any
     
     tools {
-        dotnetsdk 'default-dotnetsdk'
+        dotnetsdk null
     }
      
     stages {
