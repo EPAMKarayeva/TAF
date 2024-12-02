@@ -4,14 +4,14 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    sh "dotnet build"
+                    bat "dotnet build"
                 }
             }
         }
         stage('Test') {
             steps {
                 script {
-                    sh "dotnet test --logger trx"
+                    bat "dotnet test --logger trx"
                 }
             }
         }
