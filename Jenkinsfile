@@ -2,34 +2,41 @@ pipeline {
     agent any
     
     tools {
-        dotnet 'dotnetTool'
+        dotnetsdk 'default-dotnetsdk'
     }
-
+     
     stages {
-        stage('Preparation') {
+        stage('Validation') {
             steps {
                 script {
                     sh 'dotnet --version'
                 }
             }
         }
+        stage('Restore') {
+            steps {
+                script {
+                    sh 'dotnet restore'
+                }
+            }
+        }
         stage('Build') {
             steps {
                 script {
-                    sh "dotnet build"
+                    sh 'dotnet build'
                 }
             }
         }
         stage('Test') {
             steps {
                 script {
-                    sh "dotnet test --logger trx"
+                    sh 'dotnet test --logger trx'
                 }
             }
         }
         stage('Publish Test Results') {
             steps {
-                publishTestResults "**/*.trx"
+                publishTestResults '**/*.trx'
             }
         }
     }
