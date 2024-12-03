@@ -2,7 +2,7 @@ pipeline {
   agent { label 'linux' }  // Используйте метку, соответствующую Linux агентам
 
   tools {
-    dotnet 'dotnet_sdk_name'  // Уточните название .NET SDK, настроенное в Jenkins
+    dotnetsdk 'dotnet_sdk_name'  // Уточните название .NET SDK, настроенное в Jenkins
   }
 
   stages {
