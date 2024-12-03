@@ -1,34 +1,50 @@
 pipeline {
-  agent { label 'windows' }
+  agent { label 'linux' }  // Используйте метку, соответствующую Linux агентам
 
   tools {
-    msbuild 'msbuild_tool_name'
-    dotnetsdk 'dotnet_sdk_name' 
+    dotnet 'dotnet_sdk_name'  // Уточните название .NET SDK, настроенное в Jenkins
   }
 
   stages {
     stage('Restore') {
       steps {
-        bat 'dotnet restore'
+        sh 'dotnet restore'
       }
     }
 
     stage('Build') {
       steps {
-        bat 'dotnet build --configuration Release'
+        sh 'dotnet build --configuration Release --no-restore'
       }
     }
 
     stage('Test') {
       steps {
-        bat 'dotnet test'
+        sh 'dotnet test --no-build --no-restore'
       }
     }
 
     stage('Publish') {
       steps {
-        bat 'dotnet publish --configuration Release --output publish'
+        sh 'dotnet publish --configuration Release --output publish --no-build'
       }
+    }
+  }
+
+  post {
+    always {
+      echo 'Завершение пайплайна.'
+    }
+    success {
+      echo 'Пайплайн успешно завершен!'
+    }
+    failure {
+      echo 'Ошибка в пайплайне!'
+      // Отправка уведомления, запись в лог, etc.
+    }
+    // Шаг для архивации артефактов
+    always {
+      archiveArtifacts artifacts: 'publish/**/*'
     }
   }
 }
