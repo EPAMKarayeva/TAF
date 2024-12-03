@@ -1,8 +1,8 @@
 pipeline {
-  agent { label 'linux' }  // Используйте метку, соответствующую Linux агентам
+  agent { label 'linux' }  
 
   tools {
-    dotnetsdk 'dotnet_sdk_name'  // Уточните название .NET SDK, настроенное в Jenkins
+    dotnetsdk 'dotnet_sdk_name'  
   }
 
   stages {
@@ -34,17 +34,13 @@ pipeline {
   post {
     always {
       echo 'Завершение пайплайна.'
+      archiveArtifacts artifacts: 'publish/**/*'
     }
     success {
       echo 'Пайплайн успешно завершен!'
     }
     failure {
       echo 'Ошибка в пайплайне!'
-      // Отправка уведомления, запись в лог, etc.
-    }
-    // Шаг для архивации артефактов
-    always {
-      archiveArtifacts artifacts: 'publish/**/*'
     }
   }
 }
