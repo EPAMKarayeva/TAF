@@ -3,6 +3,7 @@ pipeline {
 
   environment {
     PATH = "$PATH:/var/jenkins_home/tools/io.jenkins.plugins.dotnet.DotNetSDK/dotnet_sdk_name"
+     DOTNET_SYSTEM_GLOBALIZATION_INVARIANT = '1'
   }
   
   tools {
