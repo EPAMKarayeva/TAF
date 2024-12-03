@@ -1,21 +1,21 @@
 pipeline {
   agent { label "build && windows" }
   stages {
-    stage('Clean Workspace'){
+    stage('Clean Workspace') {
       steps {
         cleanWs()
       }
     }
     
-    stage('Checkout'){
+    stage('Checkout') {
       steps {
         checkout([$class: 'GitSCM', 
-        branches: [[name: '*/master']], 
-        doGenerateSubmoduleConfigurations: false, 
-        extensions: [], 
-        submoduleCfg: [], 
-        userRemoteConfigs: [[url: 'https://github.com/EPAMKarayeva/TAF.git']]])
-
+          branches: [[name: '*/master']], 
+          doGenerateSubmoduleConfigurations: false, 
+          extensions: [], 
+          submoduleCfg: [], 
+          userRemoteConfigs: [[url: 'https://github.com/EPAMKarayeva/TAF.git']]
+        ])
       }
     }
     
@@ -33,18 +33,18 @@ pipeline {
       steps {
         script {
           tool name: 'msbuild_2017', type: 'msbuild'
-          bat "\"${tool 'msbuild_2017'}\"\\msbuild.exe PrimeDotnet\\prime-dotnet.sln /P:DeployOnBuild=True /p:AllowUntrustedCertificate=True /p:MSDeployServiceUrl=<IP or Hostname of IIS server> /P:DeployIISAppPath=\"Default Web Site/PrimeDotnet\""
+          bat "\"${tool('msbuild_2017')}\"\\msbuild.exe PrimeDotnet\\prime-dotnet.sln"
         }
       }
     }
 
     stage('UnitTest') {
       steps {
-        script {
-          bat label: 'Unit Test using Dotnet CLI',
+        bat label: 'Unit Test using Dotnet CLI', 
         script: '''
           dotnet.exe test .\\PrimeDotnet\\
         '''
-        }
       }
     }
+  }
+}
