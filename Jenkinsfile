@@ -1,49 +1,33 @@
 pipeline {
-  agent { label "build && windows" }
+  agent any 
+
+  tools {
+    msbuild 'msbuild_tool_name'
+    dotnetsdk 'dotnet_sdk_name' 
+  }
+
   stages {
-    stage('Clean Workspace') {
+    stage('Restore') {
       steps {
-        cleanWs()
-      }
-    }
-    
-    stage('Checkout') {
-      steps {
-        checkout([$class: 'GitSCM', 
-          branches: [[name: '*/master']], 
-          doGenerateSubmoduleConfigurations: false, 
-          extensions: [], 
-          submoduleCfg: [], 
-          userRemoteConfigs: [[url: 'https://github.com/EPAMKarayeva/TAF.git']]
-        ])
-      }
-    }
-    
-    stage('Nuget Restore') {
-      steps {
-        bat label: 'Nuget Restore', 
-        script: '''
-          nuget restore "PrimeDotnet\\prime-dotnet.sln"
-          echo "Nuget Done Starting Msbuild *************"
-        ''' 
+        bat 'dotnet restore'
       }
     }
 
     stage('Build') {
       steps {
-        script {
-          tool name: 'msbuild_2017', type: 'msbuild'
-          bat "\"${tool('msbuild_2017')}\"\\msbuild.exe PrimeDotnet\\prime-dotnet.sln"
-        }
+        bat 'dotnet build --configuration Release'
       }
     }
 
-    stage('UnitTest') {
+    stage('Test') {
       steps {
-        bat label: 'Unit Test using Dotnet CLI', 
-        script: '''
-          dotnet.exe test .\\PrimeDotnet\\
-        '''
+        bat 'dotnet test'
+      }
+    }
+
+    stage('Publish') {
+      steps {
+        bat 'dotnet publish --configuration Release --output publish'
       }
     }
   }
