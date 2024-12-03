@@ -1,5 +1,5 @@
 pipeline {
-  agent any 
+  agent { label 'windows' }
 
   tools {
     msbuild 'msbuild_tool_name'
