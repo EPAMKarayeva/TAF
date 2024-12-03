@@ -1,5 +1,5 @@
 pipeline {
-  agent { label 'linux' }  
+  agent any
 
   tools {
     dotnetsdk 'dotnet_sdk_name'  
