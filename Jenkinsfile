@@ -1,6 +1,10 @@
 pipeline {
-  agent any
+  agent any  
 
+  environment {
+    PATH = "$PATH:/var/jenkins_home/tools/io.jenkins.plugins.dotnet.DotNetSDK/dotnet_sdk_name"
+  }
+  
   tools {
     dotnetsdk 'dotnet_sdk_name'  
   }
