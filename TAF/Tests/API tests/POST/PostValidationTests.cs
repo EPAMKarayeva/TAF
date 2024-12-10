@@ -1,13 +1,8 @@
 ﻿using RestSharp;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
-using TAF.Core.Utilities.Contants;
-using TAF.Core.Utilities.TestData.TestDataProviders;
-using TAF.Tests.TestClasses;
+using TAF.Business.Constants;
+using TAF.Core.BaseClasses;
+using TAF.Tests.TestData.TestDataParsers;
 
 namespace TAF.Tests.API_tests.POST
 {
@@ -21,7 +16,7 @@ namespace TAF.Tests.API_tests.POST
     [Test]
     public void CheckCreateDashboardsWithOutAuth()
     {
-      var request = RequestWithoutAuth(DashboardEnpoints.CreateDashboardUrl, Method.Post)
+      var request = RequestWithoutAuth(DashboardEndpoints.CreateDashboardUrl, Method.Post)
                     .AddJsonBody(new Dictionary<string, string> { { "description", description }, { "name", dashboardName } });
 
       var response = _client.Execute(request);
@@ -32,10 +27,10 @@ namespace TAF.Tests.API_tests.POST
 
     [Test]
     [Parallelizable(ParallelScope.Self)]
-    [TestCaseSource(typeof(TestCaseDataParamsProvider), nameof(TestCaseDataParamsProvider.PostWithWrongParams))]
+    [TestCaseSource(typeof(TestCaseDataParamsParser), nameof(TestCaseDataParamsParser.PostWithWrongParams))]
     public void CheckCreateDashboardWithWrongParams(string description, string name)
     {
-      var request = RequestWithAuth(DashboardEnpoints.CreateDashboardUrl, Method.Post)
+      var request = RequestWithAuth(DashboardEndpoints.CreateDashboardUrl, Method.Post)
                     .AddJsonBody(new Dictionary<string, string> { { "description", description }, { "name", name } });
 
       var response = _client.Execute(request);

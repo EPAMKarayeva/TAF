@@ -1,9 +1,8 @@
 ﻿using Newtonsoft.Json.Linq;
 using RestSharp;
 using System.Net;
-using TAF.Business.Models;
-using TAF.Core.Utilities.Contants;
-using TAF.Tests.TestClasses;
+using TAF.Business.Constants;
+using TAF.Core.BaseClasses;
 
 namespace TAF.Tests.API_tests.PUT
 {
@@ -14,7 +13,7 @@ namespace TAF.Tests.API_tests.PUT
     {
       var newName = "TEST DASHBOARD " + DateTime.Now;
 
-      var request = RequestWithAuth(DashboardEnpoints.DashboardUrl, Method.Put)
+      var request = RequestWithAuth(DashboardEndpoints.DashboardUrl, Method.Put)
                     .AddQueryParameter("fields", "id,name")
                     .AddUrlSegment("id", DashboardUrl.TestDashBoard)
                     .AddJsonBody(new Dictionary<string, string> { { "name", newName } });
@@ -23,7 +22,7 @@ namespace TAF.Tests.API_tests.PUT
 
       Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
-      var getRequest = RequestWithAuth(DashboardEnpoints.GetAllDashboardsUrl, Method.Get);
+      var getRequest = RequestWithAuth(DashboardEndpoints.GetAllDashboardsUrl, Method.Get);
       var getResponse = _client.Execute(getRequest);
       var responseContent = JToken.Parse(getResponse.Content);
 

@@ -57,16 +57,16 @@
     <None Update="Core\Configuration\NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Core\Utilities\TestData\TestResources\TestDataWrongParams.json">
+    <None Update="Tests\TestData\TestDataWrongParams.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Core\Utilities\TestData\TestResources\TestDataWithAnotherId.json">
+    <None Update="Tests\TestData\TestDataWithAnotherId.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Core\Utilities\TestData\TestResources\TestDataWithWrongId.json">
+    <None Update="Tests\TestData\TestDataWithWrongId.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Core\Utilities\TestData\TestResources\TestDataWithWrongApi.json">
+    <None Update="Tests\TestData\TestDataWithWrongApi.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="ReportPortal.config.json">
