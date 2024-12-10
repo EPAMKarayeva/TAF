@@ -1,9 +1,9 @@
 ﻿using RestSharp;
 using System.Net;
-using TAF.Business.Models;
-using TAF.Core.Utilities.Contants;
-using TAF.Core.Utilities.TestData.TestDataProviders;
-using TAF.Tests.TestClasses;
+using TAF.Business.Constants;
+using TAF.Core.BaseClasses;
+using TAF.Tests.TestData.TestDataParsers;
+
 
 [assembly: LevelOfParallelism(5)]
 
@@ -16,7 +16,7 @@ namespace TAF.Tests.API_tests.GET
     [Test]
     public void CheckGetAllDashboardsWithOutAuth()
     {
-      var request = RequestWithoutAuth(DashboardEnpoints.GetAllDashboardsUrl, Method.Get);
+      var request = RequestWithoutAuth(DashboardEndpoints.GetAllDashboardsUrl, Method.Get);
 
       var response =  _client.Execute(request);
 
@@ -26,10 +26,10 @@ namespace TAF.Tests.API_tests.GET
 
     [Test]
     [Parallelizable(ParallelScope.Self)]
-    [TestCaseSource(typeof(TestCaseDataProvider), nameof(TestCaseDataProvider.GetWrongApi))]
+    [TestCaseSource(typeof(TestCaseDataParser), nameof(TestCaseDataParser.GetWrongApi))]
     public void CheckGetAllDashboardsWithWrongApiKey(string apiKey)
     {
-      var request = RequestWithoutAuth(DashboardEnpoints.GetAllDashboardsUrl, Method.Get)
+      var request = RequestWithoutAuth(DashboardEndpoints.GetAllDashboardsUrl, Method.Get)
         .AddHeader("Authorization", apiKey);
 
       var response = _client.Execute(request);
@@ -40,10 +40,10 @@ namespace TAF.Tests.API_tests.GET
 
     [Test]
     [Parallelizable(ParallelScope.Self)]
-    [TestCaseSource(typeof(TestCaseDataProvider), nameof(TestCaseDataProvider.GetWrongId))]
+    [TestCaseSource(typeof(TestCaseDataParser), nameof(TestCaseDataParser.GetWrongId))]
     public void CheckGetDashboardWithWrongId(string id)
     {
-      var request = RequestWithAuth(DashboardEnpoints.DashboardUrl, Method.Get)
+      var request = RequestWithAuth(DashboardEndpoints.DashboardUrl, Method.Get)
         .AddUrlSegment("id", id);
 
       var response = _client.Execute(request);
@@ -54,10 +54,10 @@ namespace TAF.Tests.API_tests.GET
 
     [Test]
     [Parallelizable(ParallelScope.Self)]
-    [TestCaseSource(typeof(TestCaseDataProvider), nameof(TestCaseDataProvider.GetAnotherId))]
+    [TestCaseSource(typeof(TestCaseDataParser), nameof(TestCaseDataParser.GetAnotherId))]
     public void CheckGetDashboardWithAnotherId(string id)
     {
-      var request = RequestWithAuth(DashboardEnpoints.DashboardUrl, Method.Get)
+      var request = RequestWithAuth(DashboardEndpoints.DashboardUrl, Method.Get)
         .AddUrlSegment("id", id);
 
       var response = _client.Execute(request);

@@ -1,15 +1,10 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TAF.Core.Utilities.Contants;
-using TAF.Core.Utilities.TestData.TestDataHolders;
+using TAF.Tests.TestData;
+using TAF.Tests.TestData.TestDataModels;
 
-namespace TAF.Core.Utilities.TestData.TestDataProviders
+namespace TAF.Tests.TestData.TestDataParsers
 {
-  public class TestCaseDataParamsProvider
+  public class TestCaseDataParamsParser
   {
     public static IEnumerable<TestCaseData> GetTestDataFromJson(string path)
     {
@@ -24,7 +19,7 @@ namespace TAF.Core.Utilities.TestData.TestDataProviders
 
     public static IEnumerable<TestCaseData> PostWithWrongParams()
     {
-      return GetTestDataFromJson(FilePaths.PostWithWrongParams);
+      return GetTestDataFromJson(TestDataPaths.PostWithWrongParams);
     }
   }
 }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TAF.Core.Utilities.TestData.TestDataHolders
+namespace TAF.Tests.TestData.TestDataModels
 {
   public class TestInvalidParams
   {

@@ -1,9 +1,8 @@
 ﻿using RestSharp;
 using System.Net;
-using TAF.Business.Models;
-using TAF.Core.Utilities.Contants;
-using TAF.Core.Utilities.TestData.TestDataProviders;
-using TAF.Tests.TestClasses;
+using TAF.Business.Constants;
+using TAF.Core.BaseClasses;
+using TAF.Tests.TestData.TestDataParsers;
 
 namespace TAF.Tests.API_tests.PUT
 {
@@ -16,7 +15,7 @@ namespace TAF.Tests.API_tests.PUT
     [Test]
     public void CheckUpdateDashboardsWithOutAuth()
     {
-      var request = RequestWithoutAuth(DashboardEnpoints.GetAllDashboardsUrl, Method.Put)
+      var request = RequestWithoutAuth(DashboardEndpoints.GetAllDashboardsUrl, Method.Put)
                     .AddQueryParameter("fields", "id,name")
                     .AddUrlSegment("id", DashboardUrl.TestDashBoard)
                     .AddJsonBody(new Dictionary<string, string> { { "name", newName } }); 
@@ -29,10 +28,10 @@ namespace TAF.Tests.API_tests.PUT
 
     [Test]
     [Parallelizable(ParallelScope.Self)]
-    [TestCaseSource(typeof(TestCaseDataProvider), nameof(TestCaseDataProvider.GetWrongApi))]
+    [TestCaseSource(typeof(TestCaseDataParser), nameof(TestCaseDataParser.GetWrongApi))]
     public void CheckUpdateDashboardWithWrongApiKey(string apiKey)
     {
-      var request = RequestWithoutAuth(DashboardEnpoints.GetAllDashboardsUrl, Method.Put)
+      var request = RequestWithoutAuth(DashboardEndpoints.GetAllDashboardsUrl, Method.Put)
                     .AddHeader("Authorization", apiKey)
                     .AddQueryParameter("fields", "id,name")
                     .AddUrlSegment("id", DashboardUrl.TestDashBoard)
@@ -46,10 +45,10 @@ namespace TAF.Tests.API_tests.PUT
 
     [Test]
     [Parallelizable(ParallelScope.Self)]
-    [TestCaseSource(typeof(TestCaseDataProvider), nameof(TestCaseDataProvider.GetWrongId))]
+    [TestCaseSource(typeof(TestCaseDataParser), nameof(TestCaseDataParser.GetWrongId))]
     public void CheckUpdateDashboardWithWrongId(string id)
     {
-      var request = RequestWithAuth(DashboardEnpoints.DashboardUrl, Method.Put)
+      var request = RequestWithAuth(DashboardEndpoints.DashboardUrl, Method.Put)
         .AddUrlSegment("id", id)
         .AddJsonBody(new Dictionary<string, string> { { "name", newName } });
 
@@ -62,10 +61,10 @@ namespace TAF.Tests.API_tests.PUT
 
     [Test]
     [Parallelizable(ParallelScope.Self)]
-    [TestCaseSource(typeof(TestCaseDataParamsProvider), nameof(TestCaseDataParamsProvider.PostWithWrongParams))]
+    [TestCaseSource(typeof(TestCaseDataParamsParser), nameof(TestCaseDataParamsParser.PostWithWrongParams))]
     public void CheckUpdateDashboardWithWrongParams(string description, string name)
     {
-      var request = RequestWithAuth(DashboardEnpoints.DashboardUrl, Method.Put)
+      var request = RequestWithAuth(DashboardEndpoints.DashboardUrl, Method.Put)
                     .AddUrlSegment("id", DashboardUrl.TestDashBoard)
                     .AddJsonBody(new Dictionary<string, string> { { "description", description }, { "name", name } });
 
@@ -77,10 +76,10 @@ namespace TAF.Tests.API_tests.PUT
 
     [Test]
     [Parallelizable(ParallelScope.Self)]
-    [TestCaseSource(typeof(TestCaseDataProvider), nameof(TestCaseDataProvider.GetAnotherId))]
+    [TestCaseSource(typeof(TestCaseDataParser), nameof(TestCaseDataParser.GetAnotherId))]
     public void CheckUpdateDashboardWithAnotherId(string id)
     {
-      var request = RequestWithAuth(DashboardEnpoints.DashboardUrl, Method.Put)
+      var request = RequestWithAuth(DashboardEndpoints.DashboardUrl, Method.Put)
                     .AddUrlSegment("id", id)
                     .AddJsonBody(new Dictionary<string, string> { { "name", newName } });
 

@@ -1,11 +1,12 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
-using TAF.Business.Page_Objects;
+using TAF.Business.PageObjects;
+using TAF.Core.BaseClasses;
 using WebDriverManager;
 using WebDriverManager.DriverConfigs.Impl;
 
-namespace TAF.Tests.UI_Tests
+namespace TAF.Tests.UITests
 {
   public class DashboardTests
   {
@@ -30,6 +31,7 @@ namespace TAF.Tests.UI_Tests
     public void NavigateToHomePage()
     {
       driver.Navigate().GoToUrl("http://localhost:8080/ui/#superadmin_personal/dashboard");
+      driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
     }
 
     [Test]
@@ -38,7 +40,7 @@ namespace TAF.Tests.UI_Tests
       var dashboardName = "NEW BOARD " + DateTime.Now;
 
       var createDashboardPage = new CreateDashboardPage(driver);
-      createDashboardPage.PerformCreate(dashboardName, "");
+      createDashboardPage.CreateDashboard(dashboardName, "");
       createdDashboards.Add(dashboardName);
 
       driver.Navigate().GoToUrl("http://localhost:8080/ui/#superadmin_personal/dashboard");
@@ -54,10 +56,10 @@ namespace TAF.Tests.UI_Tests
       var dashboardName = "BOARD FOR DELETION";
 
       var createDashboardPage = new CreateDashboardPage(driver);
-      createDashboardPage.PerformCreate(dashboardName, "");
+      createDashboardPage.CreateDashboard(dashboardName, "");
 
       var deletePage = new DeleteDashboardPage(driver);
-      deletePage.PerformDelete();
+      deletePage.Delete();
       driver.Navigate().Refresh();
 
       var dashboardElements = WaitForElementsToBeVisible(By.XPath($"//a[contains(text(), '{dashboardName}')]"));
@@ -71,11 +73,11 @@ namespace TAF.Tests.UI_Tests
       var newBoardName = "NEW BOARD " + DateTime.Now;
 
       var createDashboardPage = new CreateDashboardPage(driver);
-      createDashboardPage.PerformCreate(newBoardName, "");
+      createDashboardPage.CreateDashboard(newBoardName, "");
       createdDashboards.Add(newBoardName);
 
       var editPage = new EditDashboardPage(driver);
-      editPage.PerformEditDashboard(newBoardName);
+      editPage.RenameDashboard(newBoardName);
 
       driver.Navigate().GoToUrl("http://localhost:8080/ui/#superadmin_personal/dashboard");
 
@@ -91,8 +93,9 @@ namespace TAF.Tests.UI_Tests
 
       var widgetName = "Widget " + DateTime.Now;
 
+
       var addWidgetPage = new AddWidgetPage(driver);
-      addWidgetPage.PerformAddWidget(widgetName);
+      addWidgetPage.AddWidget(widgetName);
 
       var dashboardElement = WaitForElementToBeVisible(By.XPath($"//div[contains(@class, 'widgetHeader__widget-name-block--AOAHS') and text()='{widgetName}']"));
 
@@ -105,11 +108,11 @@ namespace TAF.Tests.UI_Tests
     {
       driver.Navigate().GoToUrl("http://localhost:8080/ui/#superadmin_personal/dashboard/14");
 
-      var dashboardPage = new DashboardPage(driver);
+      var baseDriver = new BaseDriver(driver);
 
-      dashboardPage.ScrollToElement();
+      baseDriver.ScrollToElement();
 
-      var isElementntInView = dashboardPage.IsElementInView();
+      var isElementntInView = baseDriver.IsElementInView();
 
       Assert.That(isElementntInView, Is.True);
     }
@@ -131,6 +134,7 @@ namespace TAF.Tests.UI_Tests
         return elements;
       });
     }
+
 
     public static void DeleteCreatedDashboard(string dashboardName)
     {

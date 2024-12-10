@@ -1,9 +1,9 @@
 ﻿using Newtonsoft.Json.Linq;
 using RestSharp;
 using System.Net;
+using TAF.Business.Constants;
 using TAF.Business.Models;
-using TAF.Core.Utilities.Contants;
-using TAF.Tests.TestClasses;
+using TAF.Core.BaseClasses;
 
 namespace TAF.Tests.API_tests.POST
 {
@@ -17,7 +17,7 @@ namespace TAF.Tests.API_tests.POST
       var dashboardName = "New Dashboard " + DateTime.Now;
       var description = "Description " + DateTime.Now;
 
-      var request = RequestWithAuth(DashboardEnpoints.CreateDashboardUrl, Method.Post)
+      var request = RequestWithAuth(DashboardEndpoints.CreateDashboardUrl, Method.Post)
                     .AddJsonBody(new Dictionary<string, string> { { "description", description }, { "name", dashboardName } });
 
       RestResponse<Dashboard> response = _client.Execute<Dashboard>(request);
@@ -26,7 +26,7 @@ namespace TAF.Tests.API_tests.POST
 
       Assert.That(HttpStatusCode.Created, Is.EqualTo(response.StatusCode));
 
-      var getRequest = RequestWithAuth(DashboardEnpoints.GetAllDashboardsUrl, Method.Get);
+      var getRequest = RequestWithAuth(DashboardEndpoints.GetAllDashboardsUrl, Method.Get);
       var getResponse = _client.Execute(getRequest);
       var responseContent = JToken.Parse(getResponse.Content);
 
@@ -41,7 +41,7 @@ namespace TAF.Tests.API_tests.POST
     [TearDown]
     public void DeleteCreatedBoard()
     {
-      var request = RequestWithAuth(DashboardEnpoints.DashboardUrl, Method.Delete)
+      var request = RequestWithAuth(DashboardEndpoints.DashboardUrl, Method.Delete)
         .AddUrlSegment("id", dashboardId);
 
       var response = _client.Execute(request);
