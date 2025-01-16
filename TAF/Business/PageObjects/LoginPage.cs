@@ -1,9 +1,10 @@
 ﻿using OpenQA.Selenium;
 using TAF.Core.BaseClasses;
+using TAF.Core.Utilities.Helpers;
 
 namespace TAF.Business.PageObjects
 {
-  public class LoginPage(IWebDriver driver) : BaseDriver(driver)
+  public class LoginPage : BaseDriver
   {
     private IWebElement Login => FindElement(By.CssSelector("input[placeholder=\"Login\"]"));
     private IWebElement Password => FindElement(By.CssSelector("input[placeholder=\"Password\"]"));
@@ -12,7 +13,7 @@ namespace TAF.Business.PageObjects
     {
       Login.SendKeys("superadmin");
       Password.SendKeys("erebus");
-      LoginButton.Click();
+      LoginButton.ClickWithWait();
 
       logger.Info("Log in successfull");
     }

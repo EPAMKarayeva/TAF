@@ -1,17 +1,18 @@
 ﻿using OpenQA.Selenium;
 using TAF.Core.BaseClasses;
+using TAF.Core.Utilities.Helpers;
 
 namespace TAF.Business.PageObjects
 {
-  public class DeleteDashboardPage(IWebDriver driver) : BaseDriver(driver)
+  public class DeleteDashboardPage() : BaseDriver()
   {
     private IWebElement DeleteButton => FindElement(By.XPath("//button[.//span[text()='Delete']]"));
-    private IWebElement SubmitButton => FindElement(By.XPath("//button[@type='button' and text()='Delete']"));
+    private IWebElement ConfirmDeleteButton => FindElement(By.XPath("//button[@type='button' and text()='Delete']"));
 
-    public void Delete()
+    public void DeleteDashboard()
     {
-      WaitForVisbility(DeleteButton).Click();
-      SubmitButton.Click();
+      DeleteButton.ClickWithWait();
+      ConfirmDeleteButton.ClickWithWait();
       logger.Info("Dashboard deleted");
     }
   }

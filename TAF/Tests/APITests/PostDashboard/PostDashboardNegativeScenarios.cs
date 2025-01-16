@@ -4,11 +4,11 @@ using TAF.Business.Constants;
 using TAF.Core.BaseClasses;
 using TAF.Tests.TestData.TestDataParsers;
 
-namespace TAF.Tests.API_tests.POST
+namespace TAF.Tests.APITests.PostDashboard
 {
   [TestFixture]
   [Parallelizable(ParallelScope.Children)]
-  public class PostValidationTests : BaseTestClass
+  public class PostDashboardNegativeScenarios : BaseAPITest
   {
     private string dashboardName = "New Dashboard ";
     private string description = "Description ";
@@ -16,11 +16,14 @@ namespace TAF.Tests.API_tests.POST
     [Test]
     public void CheckCreateDashboardsWithOutAuth()
     {
+      //Arrange
       var request = RequestWithoutAuth(DashboardEndpoints.CreateDashboardUrl, Method.Post)
                     .AddJsonBody(new Dictionary<string, string> { { "description", description }, { "name", dashboardName } });
 
+      //Act
       var response = _client.Execute(request);
 
+      //Assert
       Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Unauthorized));
       Assert.That(response.Content, Does.Contain("Full authentication is required to access this resource"));
     }
@@ -30,11 +33,14 @@ namespace TAF.Tests.API_tests.POST
     [TestCaseSource(typeof(TestCaseDataParamsParser), nameof(TestCaseDataParamsParser.PostWithWrongParams))]
     public void CheckCreateDashboardWithWrongParams(string description, string name)
     {
+      //Arrange
       var request = RequestWithAuth(DashboardEndpoints.CreateDashboardUrl, Method.Post)
                     .AddJsonBody(new Dictionary<string, string> { { "description", description }, { "name", name } });
 
+      //Act
       var response = _client.Execute(request);
 
+      //Assert
       Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
       Assert.That(response.ErrorException.Message, Does.Contain("Request failed with status code BadRequest"));
     }

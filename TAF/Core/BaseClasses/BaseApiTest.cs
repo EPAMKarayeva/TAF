@@ -3,7 +3,7 @@ using TAF.Business.Constants;
 
 namespace TAF.Core.BaseClasses
 {
-  public class BaseTestClass
+  public class BaseAPITest
   {
     protected static IRestClient _client;
 

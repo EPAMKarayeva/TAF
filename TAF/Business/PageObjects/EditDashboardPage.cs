@@ -4,17 +4,17 @@ using TAF.Core.Utilities.Helpers;
 
 namespace TAF.Business.PageObjects
 {
-  public class EditDashboardPage(IWebDriver driver): BaseDriver(driver)
+  public class EditDashboardPage(): BaseDriver()
   {
-    private IWebElement DeleteButton => FindElement(By.XPath("//button[.//span[text()='Edit']]"));
+    private IWebElement EditButton => FindElement(By.XPath("//button[.//span[text()='Edit']]"));
     private IWebElement InputName => FindElement(By.CssSelector("input[placeholder=\"Enter dashboard name\"]"));
     private IWebElement UpdateButton => FindElement(By.XPath("//button[@type='button' and text()='Update']"));
 
     public void RenameDashboard(string newName)
     {
-      WaitForVisbility(DeleteButton).Click();
-      InputHelper.InputText(InputName, newName);
-      UpdateButton.Click();
+      EditButton.ClickWithWait();
+      InputName.TypeText(newName);
+      UpdateButton.ClickWithWait();
       logger.Info("Dashboard updated");
     }
   }

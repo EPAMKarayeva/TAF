@@ -1,9 +1,10 @@
 ﻿using OpenQA.Selenium;
 using TAF.Core.BaseClasses;
+using TAF.Core.Utilities.Helpers;
 
 namespace TAF.Business.PageObjects
 {
-  public class CreateDashboardPage(IWebDriver driver): BaseDriver(driver)
+  public class CreateDashboardPage: BaseDriver
   {
     private IWebElement CreateButton => FindElement(By.XPath("//button[.//span[text()='Add New Dashboard']]"));
     private IWebElement InputName => FindElement(By.CssSelector("input[placeholder=\"Enter dashboard name\"]"));
@@ -11,10 +12,10 @@ namespace TAF.Business.PageObjects
 
     public void CreateDashboard(string name, string description)
     {
-      WaitForVisbility(CreateButton).Click();
-      InputName.SendKeys(name);
+      CreateButton.ClickWithWait();
+      InputName.TypeText(name);
       logger.Info("Name entered");
-      WaitForVisbility(AddButton).Click();
+      AddButton.ClickWithWait();
       logger.Info("Dashboard created");
     }
   }

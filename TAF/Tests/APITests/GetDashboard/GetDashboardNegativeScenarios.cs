@@ -4,20 +4,24 @@ using TAF.Business.Constants;
 using TAF.Core.BaseClasses;
 using TAF.Tests.TestData.TestDataParsers;
 
-namespace TAF.Tests.API_tests.DELETE
+[assembly: LevelOfParallelism(5)]
+
+namespace TAF.Tests.APITests.GetDashboard
 {
   [TestFixture]
   [Parallelizable(ParallelScope.Children)]
-  public class DeleteValidationTests : BaseTestClass
+  internal class GetDashboardNegativeScenarios : BaseAPITest
   {
     [Test]
-    public void CheckDeleteDashboardsWithOutAuth()
+    public void CheckGetAllDashboardsWithOutAuth()
     {
-      var request = RequestWithoutAuth(DashboardEndpoints.GetAllDashboardsUrl, Method.Delete)
-                    .AddUrlSegment("id", DashboardUrl.TestDashBoard);
+      //Arrange
+      var request = RequestWithoutAuth(DashboardEndpoints.GetAllDashboardsUrl, Method.Get);
 
+      //Act
       var response = _client.Execute(request);
 
+      //Assert
       Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Unauthorized));
       Assert.That(response.Content, Does.Contain("Full authentication is required to access this resource"));
     }
@@ -25,13 +29,16 @@ namespace TAF.Tests.API_tests.DELETE
     [Test]
     [Parallelizable(ParallelScope.Self)]
     [TestCaseSource(typeof(TestCaseDataParser), nameof(TestCaseDataParser.GetWrongApi))]
-    public void CheckDeleteWithWrongApiKey(string apiKey)
+    public void CheckGetAllDashboardsWithWrongApiKey(string apiKey)
     {
-      var request = RequestWithoutAuth(DashboardEndpoints.GetAllDashboardsUrl, Method.Delete)
+      //Arrange
+      var request = RequestWithoutAuth(DashboardEndpoints.GetAllDashboardsUrl, Method.Get)
         .AddHeader("Authorization", apiKey);
 
+      //Act
       var response = _client.Execute(request);
 
+      //Assert
       Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Unauthorized));
       Assert.That(response.Content, Does.Contain("Full authentication is required to access this resource"));
     }
@@ -39,13 +46,16 @@ namespace TAF.Tests.API_tests.DELETE
     [Test]
     [Parallelizable(ParallelScope.Self)]
     [TestCaseSource(typeof(TestCaseDataParser), nameof(TestCaseDataParser.GetWrongId))]
-    public void CheckDeleteDashboardWithWrongId(string id)
+    public void CheckGetDashboardWithWrongId(string id)
     {
-      var request = RequestWithAuth(DashboardEndpoints.DashboardUrl, Method.Delete)
+      //Arrange
+      var request = RequestWithAuth(DashboardEndpoints.DashboardUrl, Method.Get)
         .AddUrlSegment("id", id);
 
+      //Act
       var response = _client.Execute(request);
 
+      //Assert
       Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
       Assert.That(response.ErrorException.Message, Does.Contain("Request failed with status code BadRequest"));
     }
@@ -53,13 +63,16 @@ namespace TAF.Tests.API_tests.DELETE
     [Test]
     [Parallelizable(ParallelScope.Self)]
     [TestCaseSource(typeof(TestCaseDataParser), nameof(TestCaseDataParser.GetAnotherId))]
-    public void CheckDeleteDashboardWithAnotherId(string id)
+    public void CheckGetDashboardWithAnotherId(string id)
     {
-      var request = RequestWithAuth(DashboardEndpoints.DashboardUrl, Method.Delete)
+      //Arrange
+      var request = RequestWithAuth(DashboardEndpoints.DashboardUrl, Method.Get)
         .AddUrlSegment("id", id);
 
+      //Act
       var response = _client.Execute(request);
 
+      //Assert
       Assert.That(response.Content, Does.Contain($"Dashboard with ID '{id}' not found on project"));
       Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
     }
