@@ -37,20 +37,36 @@ namespace TAF.Core.BaseClasses
 
     public static IWebElement WaitForElementToBeVisible(By locator)
     {
-      return wait.Until(d =>
+      try
       {
-        var element = d.FindElement(locator);
-        return element;
-      });
+        return wait.Until(d =>
+        {
+          var element = d.FindElement(locator);
+          return element;
+        });
+      }
+      catch(ElementNotVisibleException) 
+      {
+        logger.Error("Element is not visible.");
+        throw;
+      }
     }
 
     public static IList<IWebElement> WaitForElementsToBeVisible(By locator)
     {
-      return wait.Until(d =>
+      try
       {
-        var elements = d.FindElements(locator);
-        return elements;
-      });
+        return wait.Until(d =>
+        {
+          var elements = d.FindElements(locator);
+          return elements;
+        });
+      }
+      catch (ElementNotVisibleException)
+      {
+        logger.Error("Elements are not visible.");
+        throw;
+      }
     }
 
     public static void CleanUp(string dashboardName)

@@ -13,19 +13,21 @@ namespace TAF.Core.Utilities.Helpers
 
     public static void ClickWithWait(this IWebElement element)
     {
-      IWebElement visibleElement;
-
-      if (element.Displayed)
+      try
       {
-        visibleElement = wait.Until(d => element);
+        IWebElement visibleElement = wait.Until(d => element);
+        visibleElement.Click();
       }
-      else
+      catch (NoSuchElementException)
       {
-        logger.Error("Element is not visible.");
-        throw new NoSuchElementException("Element is not visible and clickable");
+        logger.Error("Element is not found on the page.");
+        throw;
       }
-
-      visibleElement.Click();
+      catch (ElementNotInteractableException)
+      {
+        logger.Error("Element is not interactable.");
+        throw;
+      }
     }
 
     public static void TypeText(this IWebElement element, string text)
