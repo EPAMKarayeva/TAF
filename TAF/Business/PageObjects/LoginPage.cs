@@ -9,13 +9,19 @@ namespace TAF.Business.PageObjects
     private IWebElement Login => FindElement(By.CssSelector("input[placeholder=\"Login\"]"));
     private IWebElement Password => FindElement(By.CssSelector("input[placeholder=\"Password\"]"));
     private IWebElement LoginButton => FindElement(By.XPath("//button[@type='submit' and text()='Login']"));
+    private static bool IsLoged = false;
+
     public void PerformLogin()
     {
-      Login.SendKeys("superadmin");
-      Password.SendKeys("erebus");
-      LoginButton.ClickWithWait();
+      if (IsLoged == false)
+      {
+        Login.TypeText("superadmin");
+        Password.TypeText("erebus");
+        LoginButton.ClickWithWait();
 
-      logger.Info("Log in successfull");
+        IsLoged = true;
+        logger.Info("Log in successfull");
+      }
     }
   }
 }

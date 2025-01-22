@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TAF.Business.Constants;
 using TAF.Business.PageObjects;
 using TAF.Core.BaseClasses;
 using TAF.Core.Utilities.Helpers;
@@ -20,8 +21,11 @@ namespace TAF.Tests.UITests
       var createDashboardPage = new CreateDashboardPage();
       createDashboardPage.CreateDashboard(dashboardName, "");
 
-      var deletePage = new DeleteDashboardPage();
-      deletePage.DeleteDashboard();
+      browser.RefreshPage();
+      browser.GoToPage(DashboardPages.PersonalDashboard);
+
+      var deletePage = new DeleteDashboardPage(dashboardName);
+      deletePage.DeleteDashboardByName();
 
       browser.RefreshPage();
 

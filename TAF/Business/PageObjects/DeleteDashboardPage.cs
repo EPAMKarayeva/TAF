@@ -4,14 +4,23 @@ using TAF.Core.Utilities.Helpers;
 
 namespace TAF.Business.PageObjects
 {
-  public class DeleteDashboardPage() : BaseDriver()
+  public class DeleteDashboardPage : BaseDriver
   {
-    private IWebElement DeleteButton => FindElement(By.XPath("//button[.//span[text()='Delete']]"));
-    private IWebElement ConfirmDeleteButton => FindElement(By.XPath("//button[@type='button' and text()='Delete']"));
+    private string name;
+    private string rowXPath;
 
-    public void DeleteDashboard()
+    private IWebElement ConfirmDeleteButton => FindElement(By.XPath("//button[@type='button' and text()='Delete']"));
+    private IWebElement DeleteByNameButton => FindElement(By.XPath($"{rowXPath}//i[contains(@class, 'icon__icon-delete--')]"));
+
+    public DeleteDashboardPage(string dashboardName)
     {
-      DeleteButton.ClickWithWait();
+      name = dashboardName;
+      rowXPath = $"//div[contains(@class, 'gridRow__grid-row--') and .//a[contains(@class, 'dashboardTable__name--') and text()='{name}']]";
+    }
+
+    public void DeleteDashboardByName()
+    {
+      DeleteByNameButton.ClickWithWait();
       ConfirmDeleteButton.ClickWithWait();
       logger.Info("Dashboard deleted");
     }

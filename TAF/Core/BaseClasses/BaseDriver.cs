@@ -14,7 +14,7 @@ namespace TAF.Core.BaseClasses
     public BaseDriver()
     {
       driver = DriverManager.GetDriver();
-      wait = new WebDriverWait(driver, TimeSpan.FromSeconds(15));
+      wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
     }
 
     protected IWebElement FindElement(By selector)

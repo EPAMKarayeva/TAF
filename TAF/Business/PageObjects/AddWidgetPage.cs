@@ -10,7 +10,7 @@ namespace TAF.Business.PageObjects
     private IWebElement PickWidget => FindElement(By.XPath("//div[text()='Launch statistics chart']"));
     private IWebElement NextButton => FindElement(By.XPath("//button[.//span[text()='Next step']]"));
     private IWebElement PickDefaultFilter => FindElement(By.XPath("//span[contains(@class, 'inputRadio__toggler')]"));
-    private IWebElement PickNameFilter => FindElement(By.XPath("//span[@class='filterName__name--B4z4P' and text()='Name']"));
+    private IWebElement PickNameFilter => FindElement(By.XPath("//span[contains(@class, 'filterName__name') and text()='Name']"));
     private IWebElement WidgetName => FindElement(By.CssSelector("input[placeholder=\"Enter widget name\"]"));
     private IWebElement AddButton => FindElement(By.XPath("//button[@type='button' and text()='Add']"));
 

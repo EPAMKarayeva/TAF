@@ -1,4 +1,5 @@
-﻿using OpenQA.Selenium;
+﻿using NLog;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using TAF.Business.Constants;
 using TAF.Business.PageObjects;
@@ -8,15 +9,15 @@ namespace TAF.Core.BaseClasses
 {
   public class BaseUiTest
   {
-    protected static IWebDriver driver;
     protected static WebDriverWait wait;
     protected static Browser browser = new Browser();
+    protected static Logger logger = LogManager.GetCurrentClassLogger();
     protected static List<string> createdDashboards = new List<string>();
 
     [OneTimeSetUp]
     public static void SetUpWebDriver()
     {
-      driver = DriverManager.GetDriver();
+      var driver = DriverManager.GetDriver();
       driver.Manage().Window.Maximize();
 
       browser.GoToPage(DashboardPages.LoginPage);
@@ -29,8 +30,9 @@ namespace TAF.Core.BaseClasses
     [SetUp]
     public void NavigateToHomePage()
     {
+      var driver = DriverManager.GetDriver();
       browser.GoToPage(DashboardPages.PersonalDashboard);
-      driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
+      driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
     }
 
     public static IWebElement WaitForElementToBeVisible(By locator)
@@ -55,25 +57,28 @@ namespace TAF.Core.BaseClasses
     {
       browser.GoToPage(DashboardPages.PersonalDashboard);
 
-      var rowXPath = $"//div[contains(@class, 'gridRow__grid-row--') and .//a[contains(@class, 'dashboardTable__name--') and text()='{dashboardName}']]";
-
-      var deleteButton = driver.FindElement(By.XPath($"{rowXPath}//i[contains(@class, 'icon__icon-delete--')]"));
-      deleteButton.Click();
-
-      var submitButton = WaitForElementToBeVisible(By.XPath("//button[@type='button' and text()='Delete']"));
-      submitButton.Click();
+      try
+      {
+        var deletePage = new DeleteDashboardPage(dashboardName);
+        deletePage.DeleteDashboardByName();
+        logger.Info($"Dashboard '{dashboardName}' successfully deleted");
+      }
+      catch (Exception ex)
+      {
+        logger.Info($"Dashboard '{dashboardName}' wasn't successfully deleted. {ex.Message}");
+      }
     }
 
     [OneTimeTearDown]
     public static void TearDownRestClient()
     {
-      foreach (var dashboardName in createdDashboards)
+      if (createdDashboards.Count > 0)
       {
-        CleanUp(dashboardName);
+        foreach (var dashboardName in createdDashboards)
+        {
+          CleanUp(dashboardName);
+        }
       }
-
-      driver.Quit();
-      driver.Dispose();
     }
   }
 }

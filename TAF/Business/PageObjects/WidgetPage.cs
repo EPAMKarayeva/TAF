@@ -11,10 +11,10 @@ namespace TAF.Business.PageObjects
 {
   internal class WidgetPage : BaseDriver
   {
-    private IWebElement Widget => FindElement(By.XPath("//div[contains(@class, 'widgetHeader__widget-name-block--AOAHS') and text()='LAUNCHES DURATION CHART']"));
-    private IWebElement Source => FindElement(By.XPath("//div[contains(@class, 'widgetHeader__widget-name-block--AOAHS') and text()='LAUNCH STATISTICS AREA']"));
-    private IWebElement Target => FindElement(By.XPath("//div[contains(@class, 'widgetHeader__widget-name-block--AOAHS') and text()='LAUNCH STATISTICS BAR']"));
-    private IList<IWebElement> spanElements => FindElements(By.XPath("//span[contains(@class, 'react-resizable-handle') and contains(@class, 'react-resizable-handle-se')]"));
+    private IWebElement Widget => FindElement(By.XPath("//div[contains(@class, 'widgetHeader__widget-name-block') and contains(text(), 'LAUNCHES DURATION CHART')]"));
+    private IWebElement Source => FindElement(By.XPath("//div[contains(@class, 'widgetHeader__widget-name-block') and text()='LAUNCH STATISTICS AREA']"));
+    private IWebElement Target => FindElement(By.XPath("//div[contains(@class, 'widgetHeader__widget-name-block') and text()='LAUNCH STATISTICS BAR']"));
+    private IList<IWebElement> AllWidgets => FindElements(By.XPath("//span[contains(@class, 'react-resizable-handle') and contains(@class, 'react-resizable-handle-se')]"));
 
     public void DragAndDropWidget()
     {
@@ -25,7 +25,7 @@ namespace TAF.Business.PageObjects
     public void ResizeWidget(int xOffset, int yOffset, int desiredIndex)
     {
       Actions actions = new Actions(driver);
-      var specificSpanElement = spanElements[desiredIndex];
+      var specificSpanElement = AllWidgets[desiredIndex];
       actions.ClickAndHold(Source)
           .MoveByOffset(xOffset, yOffset)
           .Release()
