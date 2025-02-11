@@ -15,6 +15,7 @@ namespace TAF.Business.PageObjects
     public DeleteDashboardPage(string dashboardName)
     {
       name = dashboardName;
+      //I'm using assignment in the constructor of the class for initialization here, because fields are initializing in the run time
       rowXPath = $"//div[contains(@class, 'gridRow__grid-row--') and .//a[contains(@class, 'dashboardTable__name--') and text()='{name}']]";
     }
 
