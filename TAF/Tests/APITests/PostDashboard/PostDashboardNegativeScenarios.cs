@@ -30,7 +30,7 @@ namespace TAF.Tests.APITests.PostDashboard
 
     [Test]
     [Parallelizable(ParallelScope.Self)]
-    [TestCaseSource(typeof(TestCaseDataParamsParser), nameof(TestCaseDataParamsParser.PostWithWrongParams))]
+    [TestCaseSource(typeof(TestCaseDataProvider), nameof(TestCaseDataProvider.GetTestDataFromJson), new object[] { "TestDataInvalidValues.json" })]
     public void CheckCreateDashboardWithWrongParams(string description, string name)
     {
       //Arrange

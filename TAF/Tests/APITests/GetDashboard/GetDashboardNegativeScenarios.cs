@@ -28,8 +28,8 @@ namespace TAF.Tests.APITests.GetDashboard
 
     [Test]
     [Parallelizable(ParallelScope.Self)]
-    [TestCaseSource(typeof(TestCaseDataParser), nameof(TestCaseDataParser.GetWrongApi))]
-    public void CheckGetAllDashboardsWithWrongApiKey(string apiKey)
+    [TestCaseSource(typeof(TestCaseDataProvider), nameof(TestCaseDataProvider.GetTestDataFromJson), new object[] { "TestDataWithWrongApiKey.json" })]
+    public void CheckGetAllDashboardsWithWrongApiKey(string key, string apiKey)
     {
       //Arrange
       var request = RequestWithoutAuth(DashboardEndpoints.GetAllDashboardsUrl, Method.Get)
@@ -45,8 +45,9 @@ namespace TAF.Tests.APITests.GetDashboard
 
     [Test]
     [Parallelizable(ParallelScope.Self)]
-    [TestCaseSource(typeof(TestCaseDataParser), nameof(TestCaseDataParser.GetWrongId))]
-    public void CheckGetDashboardWithWrongId(string id)
+    [TestCaseSource(typeof(TestCaseDataProvider), nameof(TestCaseDataProvider.GetTestDataFromJson), new object[] { "TestDataWithInvalidId.json" })]
+
+    public void CheckGetDashboardWithWrongId(string key, string id)
     {
       //Arrange
       var request = RequestWithAuth(DashboardEndpoints.DashboardUrl, Method.Get)
@@ -62,8 +63,8 @@ namespace TAF.Tests.APITests.GetDashboard
 
     [Test]
     [Parallelizable(ParallelScope.Self)]
-    [TestCaseSource(typeof(TestCaseDataParser), nameof(TestCaseDataParser.GetAnotherId))]
-    public void CheckGetDashboardWithAnotherId(string id)
+    [TestCaseSource(typeof(TestCaseDataProvider), nameof(TestCaseDataProvider.GetTestDataFromJson), new object[] { "TestDataWithValidId.json" })]
+    public void CheckGetDashboardWithAnotherId(string key, string id)
     {
       //Arrange
       var request = RequestWithAuth(DashboardEndpoints.DashboardUrl, Method.Get)

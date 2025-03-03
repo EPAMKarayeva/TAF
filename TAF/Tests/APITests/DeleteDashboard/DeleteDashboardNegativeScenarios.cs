@@ -27,8 +27,8 @@ namespace TAF.Tests.APITests.DeleteDashboard
 
     [Test]
     [Parallelizable(ParallelScope.Self)]
-    [TestCaseSource(typeof(TestCaseDataParser), nameof(TestCaseDataParser.GetWrongApi))]
-    public void CheckDeleteWithWrongApiKey(string apiKey)
+    [TestCaseSource(typeof(TestCaseDataProvider), nameof(TestCaseDataProvider.GetTestDataFromJson), new object[] { "TestDataWithWrongApiKey.json" })]
+    public void CheckDeleteWithWrongApiKey(string key, string apiKey)
     {
       //Arrange
       var request = RequestWithoutAuth(DashboardEndpoints.GetAllDashboardsUrl, Method.Delete)
@@ -44,8 +44,8 @@ namespace TAF.Tests.APITests.DeleteDashboard
 
     [Test]
     [Parallelizable(ParallelScope.Self)]
-    [TestCaseSource(typeof(TestCaseDataParser), nameof(TestCaseDataParser.GetWrongId))]
-    public void CheckDeleteDashboardWithWrongId(string id)
+    [TestCaseSource(typeof(TestCaseDataProvider), nameof(TestCaseDataProvider.GetTestDataFromJson), new object[] {"TestDataWithInvalidId.json" })]
+    public void CheckDeleteDashboardWithWrongId(string key, string id)
     {
       //Arrange
       var request = RequestWithAuth(DashboardEndpoints.DashboardUrl, Method.Delete)
@@ -61,8 +61,8 @@ namespace TAF.Tests.APITests.DeleteDashboard
 
     [Test]
     [Parallelizable(ParallelScope.Self)]
-    [TestCaseSource(typeof(TestCaseDataParser), nameof(TestCaseDataParser.GetAnotherId))]
-    public void CheckDeleteDashboardWithAnotherId(string id)
+    [TestCaseSource(typeof(TestCaseDataProvider), nameof(TestCaseDataProvider.GetTestDataFromJson), new object[] { "TestDataWithValidId.json" })]
+    public void CheckDeleteDashboardWithAnotherId(string key, string id)
     {
       //Arrange
       var request = RequestWithAuth(DashboardEndpoints.DashboardUrl, Method.Delete)

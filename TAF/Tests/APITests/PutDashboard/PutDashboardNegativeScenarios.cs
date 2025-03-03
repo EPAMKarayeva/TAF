@@ -31,8 +31,8 @@ namespace TAF.Tests.APITests.PutDashboard
 
     [Test]
     [Parallelizable(ParallelScope.Self)]
-    [TestCaseSource(typeof(TestCaseDataParser), nameof(TestCaseDataParser.GetWrongApi))]
-    public void CheckUpdateDashboardWithWrongApiKey(string apiKey)
+    [TestCaseSource(typeof(TestCaseDataProvider), nameof(TestCaseDataProvider.GetTestDataFromJson), new object[] { "TestDataWithWrongApiKey.json" })]
+    public void CheckUpdateDashboardWithWrongApiKey(string key, string apiKey)
     {
       //Arrange
       var request = RequestWithoutAuth(DashboardEndpoints.GetAllDashboardsUrl, Method.Put)
@@ -51,8 +51,8 @@ namespace TAF.Tests.APITests.PutDashboard
 
     [Test]
     [Parallelizable(ParallelScope.Self)]
-    [TestCaseSource(typeof(TestCaseDataParser), nameof(TestCaseDataParser.GetWrongId))]
-    public void CheckUpdateDashboardWithWrongId(string id)
+    [TestCaseSource(typeof(TestCaseDataProvider), nameof(TestCaseDataProvider.GetTestDataFromJson), new object[] { "TestDataWithInvalidId.json" })]
+    public void CheckUpdateDashboardWithWrongId(string key, string id)
     {
       //Arrange
       var request = RequestWithAuth(DashboardEndpoints.DashboardUrl, Method.Put)
@@ -70,7 +70,7 @@ namespace TAF.Tests.APITests.PutDashboard
 
     [Test]
     [Parallelizable(ParallelScope.Self)]
-    [TestCaseSource(typeof(TestCaseDataParamsParser), nameof(TestCaseDataParamsParser.PostWithWrongParams))]
+    [TestCaseSource(typeof(TestCaseDataProvider), nameof(TestCaseDataProvider.GetTestDataFromJson), new object[] { "TestDataInvalidValues.json" })]
     public void CheckUpdateDashboardWithWrongParams(string description, string name)
     {
       //Arrange
@@ -88,8 +88,8 @@ namespace TAF.Tests.APITests.PutDashboard
 
     [Test]
     [Parallelizable(ParallelScope.Self)]
-    [TestCaseSource(typeof(TestCaseDataParser), nameof(TestCaseDataParser.GetAnotherId))]
-    public void CheckUpdateDashboardWithAnotherId(string id)
+    [TestCaseSource(typeof(TestCaseDataProvider), nameof(TestCaseDataProvider.GetTestDataFromJson), new object[] { "TestDataWithValidId.json" })]
+    public void CheckUpdateDashboardWithAnotherId(string key, string id)
     {
       //Arrange
       var request = RequestWithAuth(DashboardEndpoints.DashboardUrl, Method.Put)
