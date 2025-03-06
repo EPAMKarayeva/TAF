@@ -1,7 +1,4 @@
-﻿using TAF.Tests.TestData.TestDataManager;
-
-
-namespace TAF.Tests.TestData.TestDataParsers
+﻿namespace TAF.Tests.TestData.TestDataManager
 {
   public class TestCaseDataProvider
   {

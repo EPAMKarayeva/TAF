@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 
-namespace TAF.Tests.TestData.TestDataParsers
+namespace TAF.Tests.TestData.TestDataManager
 {
   public static class TestCaseDataParser
   {

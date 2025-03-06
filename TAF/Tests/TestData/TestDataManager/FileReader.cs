@@ -4,7 +4,7 @@ namespace TAF.Tests.TestData.TestDataManager
 {
   public static class FileReader
   {
-    private static Logger logger = LogManager.GetCurrentClassLogger();
+    private static readonly Logger logger = LogManager.GetCurrentClassLogger();
 
     public static string ReadFile(string fileName)
     {

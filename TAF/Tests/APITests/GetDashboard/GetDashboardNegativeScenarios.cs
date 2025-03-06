@@ -2,7 +2,7 @@
 using System.Net;
 using TAF.Business.Constants;
 using TAF.Core.BaseClasses;
-using TAF.Tests.TestData.TestDataParsers;
+using TAF.Tests.TestData.TestDataManager;
 
 [assembly: LevelOfParallelism(5)]
 
