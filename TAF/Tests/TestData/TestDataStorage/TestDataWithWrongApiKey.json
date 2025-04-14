@@ -1,0 +1,6 @@
+[
+  { "InvalidParameter": "invalid key" },
+  { "InvalidParameter": "" },
+  { "InvalidParameter": 12345 },
+  { "InvalidParameter": " " }
+]
