@@ -2,13 +2,13 @@
 {
   public class TestCaseDataProvider
   {
-    public static IEnumerable<object[]> GetTestDataFromJson(string path)
+    public static IEnumerable<object[]> GetTestDataByKey(string path, string key)
     {
-      var json = File.ReadAllText(path);
-      var testData = TestCaseDataParser.ConvertJson(json);
+      var json = FileReader.ReadFile(path);
 
-      return TestCaseSourceGenerator.GenerateCase(testData);
+      var jsonObject = TestCaseDataParser.ConvertJson(json);
+
+      return TestCaseSourceGenerator.GenerateCasesByKey(jsonObject, key);
     }
-
   }
 }

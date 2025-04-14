@@ -1,6 +1,8 @@
-﻿using RestSharp;
+﻿using Newtonsoft.Json;
+using RestSharp;
 using System.Net;
 using TAF.Business.Constants;
+using TAF.Business.Models;
 using TAF.Core.BaseClasses;
 using TAF.Tests.TestData.TestDataManager;
 
@@ -19,15 +21,21 @@ namespace TAF.Tests.APITests.DeleteDashboard
 
       //Act
       var response = _client.Execute(request);
+      var jsonResponse = JsonConvert.DeserializeObject<ErrorResponse>(response.Content);
 
       //Assert
-      Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Unauthorized));
-      Assert.That(response.Content, Does.Contain("Full authentication is required to access this resource"));
+      Assert.Multiple(() =>
+      {
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Unauthorized));
+        Assert.That(response.Content, Does.Contain("Full authentication is required to access this resource"));
+        Assert.That(jsonResponse.Error, Is.Not.Null.Or.Empty, "Field 'error' is missing or empty.");
+        Assert.That(jsonResponse.ErrorDescription, Is.Not.Null.Or.Empty, "Field 'error_description' is missing or empty.");
+      });
     }
 
     [Test]
     [Parallelizable(ParallelScope.Self)]
-    [TestCaseSource(typeof(TestCaseDataProvider), nameof(TestCaseDataProvider.GetTestDataFromJson), new object[] { "TestDataWithWrongApiKey.json" })]
+    [TestCaseSource(typeof(TestCaseDataProvider), nameof(TestCaseDataProvider.GetTestDataByKey), new object[] { "TestDataValues.json", "invalidApiKey" })]
     public void CheckDeleteWithWrongApiKey(string key, string apiKey)
     {
       //Arrange
@@ -36,16 +44,44 @@ namespace TAF.Tests.APITests.DeleteDashboard
 
       //Act
       var response = _client.Execute(request);
+      var jsonResponse = JsonConvert.DeserializeObject<ErrorResponse>(response.Content);
 
       //Assert
-      Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Unauthorized));
-      Assert.That(response.Content, Does.Contain("Full authentication is required to access this resource"));
+      Assert.Multiple(() =>
+      {
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Unauthorized));
+        Assert.That(response.Content, Does.Contain("Full authentication is required to access this resource"));
+        Assert.That(jsonResponse.Error, Is.Not.Null.Or.Empty, "Field 'error' is missing or empty.");
+        Assert.That(jsonResponse.ErrorDescription, Is.Not.Null.Or.Empty, "Field 'error_description' is missing or empty.");
+      });
     }
 
     [Test]
     [Parallelizable(ParallelScope.Self)]
-    [TestCaseSource(typeof(TestCaseDataProvider), nameof(TestCaseDataProvider.GetTestDataFromJson), new object[] {"TestDataWithInvalidId.json" })]
-    public void CheckDeleteDashboardWithWrongId(string key, string id)
+    [TestCaseSource(typeof(TestCaseDataProvider), nameof(TestCaseDataProvider.GetTestDataByKey), new object[] { "TestDataValues.json", "invalidIds" })]
+    public void CheckDeleteDashboardWithInvalidId(string key, string id)
+    {
+      //Arrange
+      var request = RequestWithAuth(DashboardEndpoints.DashboardUrl, Method.Delete)
+        .AddUrlSegment("id", id);
+
+      //Act
+      var response = _client.Execute(request);
+      var jsonResponse = JsonConvert.DeserializeObject<ErrorResponse>(response.Content);
+
+      //Assert
+      Assert.Multiple(() =>
+      {
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
+        Assert.That(response.ErrorException.Message, Does.Contain("Request failed with status code BadRequest"));
+        Assert.That(jsonResponse.Error, Is.Not.Null.Or.Empty, "Field 'error' is missing or empty.");
+      });
+    }
+
+    [Test]
+    [Parallelizable(ParallelScope.Self)]
+    [TestCaseSource(typeof(TestCaseDataProvider), nameof(TestCaseDataProvider.GetTestDataByKey), new object[] { "TestDataValues.json", "nonExistingIds" })]
+    public void CheckDeleteDashboardWithNonExistingId(string key, string id)
     {
       //Arrange
       var request = RequestWithAuth(DashboardEndpoints.DashboardUrl, Method.Delete)
@@ -55,25 +91,11 @@ namespace TAF.Tests.APITests.DeleteDashboard
       var response = _client.Execute(request);
 
       //Assert
-      Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
-      Assert.That(response.ErrorException.Message, Does.Contain("Request failed with status code BadRequest"));
-    }
-
-    [Test]
-    [Parallelizable(ParallelScope.Self)]
-    [TestCaseSource(typeof(TestCaseDataProvider), nameof(TestCaseDataProvider.GetTestDataFromJson), new object[] { "TestDataWithValidId.json" })]
-    public void CheckDeleteDashboardWithAnotherId(string key, string id)
-    {
-      //Arrange
-      var request = RequestWithAuth(DashboardEndpoints.DashboardUrl, Method.Delete)
-        .AddUrlSegment("id", id);
-
-      //Act
-      var response = _client.Execute(request);
-
-      //Assert
-      Assert.That(response.Content, Does.Contain($"Dashboard with ID '{id}' not found on project"));
-      Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
+      Assert.Multiple(() =>
+      {
+        Assert.That(response.Content, Does.Contain($"Dashboard with ID '{id}' not found on project"));
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
+      });
     }
   }
 }

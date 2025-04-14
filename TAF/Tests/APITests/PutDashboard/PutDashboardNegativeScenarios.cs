@@ -10,7 +10,8 @@ namespace TAF.Tests.APITests.PutDashboard
   [Parallelizable(ParallelScope.Children)]
   public class PutDashboardNegativeScenarios : BaseAPITest
   {
-    string newName = "NEW NAME " + DateTime.Now;
+    private string newName = "NEW NAME " + DateTime.Now;
+    private string description = "Description ";
 
     [Test]
     public void CheckUpdateDashboardsWithOutAuth()
@@ -31,7 +32,7 @@ namespace TAF.Tests.APITests.PutDashboard
 
     [Test]
     [Parallelizable(ParallelScope.Self)]
-    [TestCaseSource(typeof(TestCaseDataProvider), nameof(TestCaseDataProvider.GetTestDataFromJson), new object[] { "TestDataWithWrongApiKey.json" })]
+    [TestCaseSource(typeof(TestCaseDataProvider), nameof(TestCaseDataProvider.GetTestDataByKey), new object[] { "TestDataValues.json", "invalidApiKey" })]
     public void CheckUpdateDashboardWithWrongApiKey(string key, string apiKey)
     {
       //Arrange
@@ -51,8 +52,8 @@ namespace TAF.Tests.APITests.PutDashboard
 
     [Test]
     [Parallelizable(ParallelScope.Self)]
-    [TestCaseSource(typeof(TestCaseDataProvider), nameof(TestCaseDataProvider.GetTestDataFromJson), new object[] { "TestDataWithInvalidId.json" })]
-    public void CheckUpdateDashboardWithWrongId(string key, string id)
+    [TestCaseSource(typeof(TestCaseDataProvider), nameof(TestCaseDataProvider.GetTestDataByKey), new object[] { "TestDataValues.json", "invalidIds" })]
+    public void CheckUpdateDashboardWithInvalidId(string key, string id)
     {
       //Arrange
       var request = RequestWithAuth(DashboardEndpoints.DashboardUrl, Method.Put)
@@ -70,8 +71,8 @@ namespace TAF.Tests.APITests.PutDashboard
 
     [Test]
     [Parallelizable(ParallelScope.Self)]
-    [TestCaseSource(typeof(TestCaseDataProvider), nameof(TestCaseDataProvider.GetTestDataFromJson), new object[] { "TestDataInvalidValues.json" })]
-    public void CheckUpdateDashboardWithWrongParams(string description, string name)
+    [TestCaseSource(typeof(TestCaseDataProvider), nameof(TestCaseDataProvider.GetTestDataByKey), new object[] { "TestDataValues.json", "invalidNameValue" })]
+    public void CheckUpdateDashboardWithInvalidName(string key, string name)
     {
       //Arrange
       var request = RequestWithAuth(DashboardEndpoints.DashboardUrl, Method.Put)
@@ -88,8 +89,8 @@ namespace TAF.Tests.APITests.PutDashboard
 
     [Test]
     [Parallelizable(ParallelScope.Self)]
-    [TestCaseSource(typeof(TestCaseDataProvider), nameof(TestCaseDataProvider.GetTestDataFromJson), new object[] { "TestDataWithValidId.json" })]
-    public void CheckUpdateDashboardWithAnotherId(string key, string id)
+    [TestCaseSource(typeof(TestCaseDataProvider), nameof(TestCaseDataProvider.GetTestDataByKey), new object[] { "TestDataValues.json", "nonExistingIds" })]
+    public void CheckUpdateDashboardWithNonExistingId(string key, string id)
     {
       //Arrange
       var request = RequestWithAuth(DashboardEndpoints.DashboardUrl, Method.Put)

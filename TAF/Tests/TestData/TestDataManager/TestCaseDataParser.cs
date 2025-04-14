@@ -4,9 +4,9 @@ namespace TAF.Tests.TestData.TestDataManager
 {
   public static class TestCaseDataParser
   {
-    public static JArray ConvertJson(string testData)
+    public static JObject ConvertJson(string testData)
     {
-      return JArray.Parse(testData);
+      return JObject.Parse(testData);
     }
   }
 }
