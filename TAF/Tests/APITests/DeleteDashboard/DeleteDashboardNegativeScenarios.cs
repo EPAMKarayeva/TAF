@@ -26,10 +26,9 @@ namespace TAF.Tests.APITests.DeleteDashboard
       //Assert
       Assert.Multiple(() =>
       {
-        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Unauthorized));
-        Assert.That(response.Content, Does.Contain("Full authentication is required to access this resource"));
         Assert.That(jsonResponse.Error, Is.Not.Null.Or.Empty, "Field 'error' is missing or empty.");
-        Assert.That(jsonResponse.ErrorDescription, Is.Not.Null.Or.Empty, "Field 'error_description' is missing or empty.");
+        Assert.That(jsonResponse.ErrorDescription, Is.EqualTo("Full authentication is required to access this resource"));
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Unauthorized));
       });
     }
 
@@ -49,10 +48,9 @@ namespace TAF.Tests.APITests.DeleteDashboard
       //Assert
       Assert.Multiple(() =>
       {
-        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Unauthorized));
-        Assert.That(response.Content, Does.Contain("Full authentication is required to access this resource"));
         Assert.That(jsonResponse.Error, Is.Not.Null.Or.Empty, "Field 'error' is missing or empty.");
-        Assert.That(jsonResponse.ErrorDescription, Is.Not.Null.Or.Empty, "Field 'error_description' is missing or empty.");
+        Assert.That(jsonResponse.ErrorDescription, Is.EqualTo("Full authentication is required to access this resource"));
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Unauthorized));
       });
     }
 
@@ -72,9 +70,9 @@ namespace TAF.Tests.APITests.DeleteDashboard
       //Assert
       Assert.Multiple(() =>
       {
-        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
-        Assert.That(response.ErrorException.Message, Does.Contain("Request failed with status code BadRequest"));
         Assert.That(jsonResponse.Error, Is.Not.Null.Or.Empty, "Field 'error' is missing or empty.");
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
+        Assert.That(response.ErrorException.Message, Is.EqualTo("Request failed with status code BadRequest"));
       });
     }
 
@@ -89,11 +87,13 @@ namespace TAF.Tests.APITests.DeleteDashboard
 
       //Act
       var response = _client.Execute(request);
+      var jsonResponse = JsonConvert.DeserializeObject<InvalidValueResponse>(response.Content);
 
       //Assert
       Assert.Multiple(() =>
       {
-        Assert.That(response.Content, Does.Contain($"Dashboard with ID '{id}' not found on project"));
+        Assert.That(jsonResponse.Message, Is.EqualTo($"Dashboard with ID '{id}' not found on project 'superadmin_personal'. Did you use correct Dashboard ID?"));
+        Assert.That(jsonResponse.ErrorCode, Is.EqualTo(40422), "Expected status code 40422.");
         Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
       });
     }

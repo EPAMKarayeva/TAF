@@ -29,10 +29,9 @@ namespace TAF.Tests.APITests.PostDashboard
       //Assert
       Assert.Multiple(() =>
       {
+        Assert.That(jsonResponse.ErrorDescription, Is.EqualTo("Full authentication is required to access this resource"));
+        Assert.That(jsonResponse.Error, Is.Not.Null.Or.Empty, "Field 'error' is missing or empty.");
         Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Unauthorized));
-        Assert.That(response.Content, Does.Contain("Full authentication is required to access this resource"));
-        //Assert.That(jsonResponse.Error, Is.Not.Null.Or.Empty, "Field 'error' is missing or empty.");
-        //Assert.That(jsonResponse.ErrorDescription, Is.Not.Null.Or.Empty, "Field 'error_description' is missing or empty.");
       });
     }
 
@@ -48,10 +47,15 @@ namespace TAF.Tests.APITests.PostDashboard
 
       //Act
       var response = _client.Execute(request);
+      var jsonResponse = JsonConvert.DeserializeObject<Business.Models.ErrorResponse>(response.Content);
 
       //Assert
-      Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Unauthorized));
-      Assert.That(response.Content, Does.Contain("Full authentication is required to access this resource"));
+      Assert.Multiple(() =>
+      {
+        Assert.That(jsonResponse.Error, Is.Not.Null.Or.Empty, "Field 'error' is missing or empty.");
+        Assert.That(jsonResponse.ErrorDescription, Is.EqualTo("Full authentication is required to access this resource"));
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Unauthorized));
+      });
     }
 
     [Test]
@@ -65,15 +69,14 @@ namespace TAF.Tests.APITests.PostDashboard
 
       //Act
       var response = _client.Execute(request);
-      var jsonResponse = JsonConvert.DeserializeObject<ErrorResponse>(response.Content);
+      var jsonResponse = JsonConvert.DeserializeObject<InvalidValueResponse>(response.Content);
 
       //Assert
       Assert.Multiple(() =>
       {
+        Assert.That(jsonResponse.ErrorCode, Is.EqualTo(4001), "Expected status code 4001.");
         Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
-        Assert.That(response.ErrorException.Message, Does.Contain("Request failed with status code BadRequest"));
-        //Assert.That(jsonResponse.Error, Is.Not.Null.Or.Empty, "Field 'error' is missing or empty.");
-        //Assert.That(jsonResponse.ErrorDescription, Is.Not.Null.Or.Empty, "Field 'error_description' is missing or empty.");
+        Assert.That(response.ErrorException.Message, Is.EqualTo("Request failed with status code BadRequest"));
       });
     }
   }
