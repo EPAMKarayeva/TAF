@@ -1,0 +1,6 @@
+{
+  "nonExistingIds": [ "123456", "2" ],
+  "invalidIds": [ "id", "7&??123", "__" ],
+  "invalidApiKey": [ "invalid key", "", 12345 ],
+  "invalidNameValue": [ "XUDpqVP5VwfxdPjhW54rhRfIBTKqewVx6lXcrKuhPz2Y9FRF68ibrwR5h837ONsdq5ZKjLDDDTnVpRp7yHO4TInak4VbbEGKLiZI1OS03tI97SB4Cd0wZtLAqAta23Dk123", "na", " " ]
+}
